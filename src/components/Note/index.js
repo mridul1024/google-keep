@@ -22,6 +22,8 @@ export default function Note() {
   const dispatch = useDispatch();
   const classes = useStyles();
   let contentFieldVisibility = false;
+  const [values, setValues] = useState({ title: "", content: "" });
+  const [isOpen, setIsOpen] = useState(false);
 
   const [note, addNote] = useState({
     noteData: {
@@ -62,39 +64,33 @@ export default function Note() {
     }
   };
 
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: [e.target.value] });
+    console.log(values);
+  };
+
   const open = Boolean(note.anchor);
   const id = open ? "simple-popover" : undefined;
 
   const addNewNote = () => {
-    let title = document.getElementById("noteTitle").value;
-    let content = document.getElementById("noteContent").value;
-    console.log(`${title}, ${content} has been added`);
-
-    let data = { noteTitle: title, noteContent: content };
     addNote({
       ...note,
       noteData: {
-        noteTitle: title,
-        noteContent: content,
+        noteTitle: values.title,
+        noteContent: values.content,
       },
     });
 
     console.log(note.noteData);
-    dispatch(addNotes(note.noteData));
+    dispatch(
+      addNotes({
+        note: {
+          title: values.title,
+          content: values.content,
+        },
+      })
+    );
   };
-
-  const addContentField = () => {
-    if (!contentFieldVisibility && !document.getElementById("noteContent")) {
-      contentFieldVisibility = true;
-      var input = document.createElement("input");
-      input.id = "noteContent";
-      input.className = classes.textField;
-      input.placeholder = "Write more details about your note here.";
-      document.getElementById("form-element").appendChild(input);
-    }
-  };
-
-  useEffect(() => {});
 
   return (
     <>
@@ -106,13 +102,29 @@ export default function Note() {
             noValidate
             autoComplete="off"
           >
-            <input
+            <TextField
               id="noteTitle"
               type="text"
+              name="title"
               className={classes.textField}
-              placeholder="Write a note."
-              onClick={addContentField}
+              placeholder="Title"
+              value={values.title}
+              onChange={handleChange}
+              onClick={() => {
+                setIsOpen(true);
+              }}
             />
+            {isOpen && (
+              <TextField
+                id="noteTitle"
+                type="text"
+                name="content"
+                className={classes.textField}
+                onChange={handleChange}
+                placeholder="Write your note here."
+                value={values.content}
+              />
+            )}
           </form>
         </CardContent>
         <CardActions className={classes.buttonContainer}>
@@ -130,8 +142,7 @@ export default function Note() {
               horizontal: "left",
             }}
           >
-            {/* <Typography sx={{ p: 2 }}> */}
-            <input
+            <TextField
               id="chipsInput"
               type="text"
               placeholder="Enter tag"
@@ -141,8 +152,6 @@ export default function Note() {
             <Button size="small" onClick="">
               <CheckOutlined />
             </Button>
-
-            {/* </Typography> */}
           </Popover>
 
           <Button size="large" onClick={addNewNote}>
