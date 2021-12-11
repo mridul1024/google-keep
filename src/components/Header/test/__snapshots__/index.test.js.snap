@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header /> component tests should render the component and match snapshot: baseElement 1`] = `
+<body>
+  <div>
+    <div
+      class="sc-bdvvtL bMOmCi"
+    >
+      <p
+        class="sc-gsDKAQ iFqnxm"
+      >
+        Google Keep Clone
+      </p>
+    </div>
+  </div>
+</body>
+`;
