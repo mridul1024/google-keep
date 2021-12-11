@@ -9,11 +9,13 @@ import {
   TextField,
   Popover,
   Input,
+  Chip,
 } from "@material-ui/core";
 import {
   PlusCircleOutlined,
   TagOutlined,
   CheckOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { addNotes } from "../../redux/actions/NoteAction";
@@ -24,6 +26,8 @@ export default function Note() {
   let contentFieldVisibility = false;
   const [values, setValues] = useState({ title: "", content: "" });
   const [isOpen, setIsOpen] = useState(false);
+  const [tagValue, setTagValue] = useState({ tag: "" });
+  const [tags, setTags] = useState([]);
 
   const [note, addNote] = useState({
     noteData: {
@@ -65,7 +69,7 @@ export default function Note() {
   };
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: [e.target.value] });
+    setValues({ ...values, [e.target.name]: e.target.value });
     console.log(values);
   };
 
@@ -87,78 +91,123 @@ export default function Note() {
         note: {
           title: values.title,
           content: values.content,
+          chips: tags,
         },
       })
     );
   };
 
+  const storeTag = (e) => {
+    setTagValue({ tag: e.currentTarget.value });
+    console.log(`tag = ${tagValue.tag}`);
+  };
+
+  const addTag = () => {
+    console.log(`add tag = ${tagValue.tag}`);
+    //add tag here
+    setTags([...tags, tagValue.tag.toString()]);
+    console.log(tags);
+  };
+
+  const deleteTag = (item, index) => {
+    console.log(`delete = ${index} ${item}`);
+    setTags([...tags.filter((item, id) => index !== id)]);
+    console.log(tags);
+  };
+
   return (
     <>
-      <Card className={classes.container}>
-        <CardContent className="">
-          <form
-            className={classes.content}
-            id="form-element"
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="noteTitle"
-              type="text"
-              name="title"
-              className={classes.textField}
-              placeholder="Title"
-              value={values.title}
-              onChange={handleChange}
-              onClick={() => {
-                setIsOpen(true);
-              }}
-            />
-            {isOpen && (
+      <div className={classes.moveToCenter}>
+        <Card className={classes.container}>
+          <CardContent className="">
+            <form
+              className={classes.content}
+              id="form-element"
+              noValidate
+              autoComplete="off"
+            >
               <TextField
                 id="noteTitle"
                 type="text"
-                name="content"
+                name="title"
                 className={classes.textField}
+                placeholder="Title"
+                value={values.title}
                 onChange={handleChange}
-                placeholder="Write your note here."
-                value={values.content}
+                InputProps={{ disableUnderline: true }}
+                onClick={() => {
+                  setIsOpen(true);
+                }}
               />
-            )}
-          </form>
-        </CardContent>
-        <CardActions className={classes.buttonContainer}>
-          <Button size="large" onClick={handleClick}>
-            <TagOutlined />
-          </Button>
-
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={note.anchor}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            <TextField
-              id="chipsInput"
-              type="text"
-              placeholder="Enter tag"
-              className={classes.textField}
-            />
-
-            <Button size="small" onClick="">
-              <CheckOutlined />
+              {isOpen && (
+                <TextField
+                  id="noteTitle"
+                  type="text"
+                  name="content"
+                  className={classes.textField}
+                  onChange={handleChange}
+                  placeholder="Write your note here."
+                  InputProps={{ disableUnderline: true }}
+                  value={values.content}
+                />
+              )}
+              {Object.keys(tags).length > 0 ? (
+                <div className={classes.chipContainer}>
+                  {tags.map((item, index) => (
+                    <Chip
+                      key={index}
+                      className={classes.tags}
+                      label={item}
+                      onDelete={() => deleteTag(item, index)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <Typography className={classes.tagPlaceholder}>
+                  Your tags will show up here.
+                </Typography>
+              )}
+            </form>
+          </CardContent>
+          <CardActions className={classes.buttonContainer}>
+            <Button size="large" onClick={handleClick}>
+              <TagOutlined />
             </Button>
-          </Popover>
 
-          <Button size="large" onClick={addNewNote}>
-            <PlusCircleOutlined style={{ color: "green" }} />
-          </Button>
-        </CardActions>
-      </Card>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={note.anchor}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <TextField
+                id="chipsInput"
+                type="text"
+                placeholder="Enter tag"
+                className={classes.textField}
+                InputProps={{ disableUnderline: true }}
+                onChange={storeTag}
+              />
+
+              <Button
+                size="large"
+                onClick={addTag}
+                className={classes.buttonContainer}
+              >
+                <CheckCircleOutlined />
+              </Button>
+            </Popover>
+
+            <Button size="large" onClick={addNewNote}>
+              <PlusCircleOutlined style={{ color: "green" }} />
+            </Button>
+          </CardActions>
+        </Card>
+      </div>
     </>
   );
 }

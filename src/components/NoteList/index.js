@@ -14,6 +14,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import { CheckOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+// import { v4 as uuidv4 } from "uuid";
 
 export default function NoteList() {
   const allNotes = useSelector((state) => state.note.notes);
@@ -40,6 +41,10 @@ export default function NoteList() {
     console.log(`delete =`);
   };
 
+  // const generateId = () => {
+  //   return uuidv4();
+  // };
+
   return (
     <>
       <div className={classes.listContainer}>
@@ -51,6 +56,7 @@ export default function NoteList() {
             deleteNotes={deleteNotes}
             title={item.note.title.toString()}
             content={item.note.content.toString()}
+            chips={item.note.chips}
           />
 
           // <Card key={index} className={classes.container}>

@@ -6,6 +6,7 @@ export const useStyles = makeStyles({
     height: "auto",
     padding: "5px 5px",
     margin: "10px 10px",
+    background: "#fff59d",
   },
   content: {
     display: "grid",
@@ -13,8 +14,6 @@ export const useStyles = makeStyles({
   },
   textField: {
     marginTop: "10px",
-    border: "none",
-    outline: "none",
     fontSize: "16px",
   },
   buttonContainer: {
@@ -24,5 +23,13 @@ export const useStyles = makeStyles({
   listContainer: {
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
+  },
+  chipsContainer: {
+    display: "flex",
+  },
+  chip: {
+    marginTop: "20px",
+    marginRight: "3px",
+    background: "white",
   },
 });

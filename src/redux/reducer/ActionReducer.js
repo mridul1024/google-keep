@@ -14,7 +14,11 @@ export const noteReducer = (state = initialState, { type, payload }) => {
     case ActionTypes.EDIT_NOTE:
       console.log(`edit note = ${payload.title} ${payload.content}`);
       var updateElement = {
-        note: { title: payload.title, content: payload.content },
+        note: {
+          title: payload.title,
+          content: payload.content,
+          chips: payload.chips,
+        },
       };
       state.notes[payload.id] = updateElement;
       return {
