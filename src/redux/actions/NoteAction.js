@@ -27,10 +27,3 @@ export const searchNoteTag = (payload) => {
     payload: payload,
   };
 };
-
-// export const addChips = (payload) => {
-//   return {
-//     type: ActionTypes.ADD_CHIPS,
-//     payload: payload,
-//   };
-// }
