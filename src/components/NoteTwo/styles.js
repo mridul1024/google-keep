@@ -3,10 +3,11 @@ import { makeStyles } from "@material-ui/core";
 export const useStyles = makeStyles({
   container: {
     width: "250px",
-    height: "auto",
+    height: "200px",
     padding: "5px 5px",
     margin: "10px 10px",
     background: "#fff59d",
+    position: "relative",
   },
   content: {
     display: "grid",
@@ -17,8 +18,11 @@ export const useStyles = makeStyles({
     fontSize: "16px",
   },
   buttonContainer: {
-    justifyContent: "end",
-    alignItems: "end",
+    // justifyContent: "end",
+    // alignItems: "end",
+    position: "absolute",
+    right: "5px",
+    bottom: "5px",
   },
   listContainer: {
     display: "grid",

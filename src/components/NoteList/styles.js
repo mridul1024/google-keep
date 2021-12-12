@@ -25,4 +25,15 @@ export const useStyles = makeStyles({
     display: "grid",
     gridTemplateColumns: "repeat(5, 1fr)",
   },
+  searchContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "20px",
+    marginBottom: "20px",
+  },
+  searchButton: {
+    marginLeft: "10px",
+  },
 });

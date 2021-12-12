@@ -19,6 +19,7 @@ import {
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { addNotes } from "../../redux/actions/NoteAction";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Note() {
   const dispatch = useDispatch();
@@ -77,18 +78,19 @@ export default function Note() {
   const id = open ? "simple-popover" : undefined;
 
   const addNewNote = () => {
-    addNote({
-      ...note,
-      noteData: {
-        noteTitle: values.title,
-        noteContent: values.content,
-      },
-    });
+    // addNote({
+    //   ...note,
+    //   noteData: {
+    //     noteTitle: values.title,
+    //     noteContent: values.content,
+    //   },
+    // });
 
     console.log(note.noteData);
     dispatch(
       addNotes({
         note: {
+          id: uuidv4(),
           title: values.title,
           content: values.content,
           chips: tags,
