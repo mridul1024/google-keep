@@ -21,9 +21,16 @@ export const deleteNoteState = (payload) => {
   };
 };
 
-export const addChips = (payload) => {
+export const searchNoteTag = (payload) => {
   return {
-    type: ActionTypes.ADD_CHIPS,
+    type: ActionTypes.SEARCH,
     payload: payload,
   };
 };
+
+// export const addChips = (payload) => {
+//   return {
+//     type: ActionTypes.ADD_CHIPS,
+//     payload: payload,
+//   };
+// }

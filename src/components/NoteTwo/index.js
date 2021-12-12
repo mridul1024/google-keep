@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStyles } from "./styles";
 import { DeleteOutlined, EditOutlined, CheckOutlined } from "@ant-design/icons";
 import {
@@ -18,8 +18,14 @@ export default function NoteTwo({ index, title, content, chips }) {
   const classes = useStyles();
   const [edit, setEdit] = useState(true);
   const [values, setValues] = useState({ title: title, content: content });
+  const [chipValues, setChipValues] = useState(chips);
   const [changeTrigger, setChangeTrigger] = useState(false);
+  const [chipChangeTrigger, setChipChangeTrigger] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setChipValues(chips);
+  }, [chips]);
 
   //add handlechange
   const handleChange = (e) => {
@@ -34,22 +40,35 @@ export default function NoteTwo({ index, title, content, chips }) {
       console.log("disabled tha ab enabled");
     }
 
-    if (!edit && changeTrigger) {
+    if (!edit && (changeTrigger || chipChangeTrigger)) {
+      console.log(`while editing - ${chipValues}`);
       dispatch(
         editNoteState({
           id: index,
           title: values.title,
           content: values.content,
-          chips: chips,
+          chips: chipValues,
         })
       );
       setChangeTrigger(false);
+      setChipChangeTrigger(false);
     }
     edit ? setEdit(false) : setEdit(true);
   };
 
   const deleteNotes = () => {
     dispatch(deleteNoteState(index));
+  };
+
+  const deleteChip = (item, index) => {
+    setChipChangeTrigger(true);
+    console.log(`delete chip with item - ${item} and index - ${index}`);
+    setChipValues([...chipValues.filter((chip) => chip !== item)]);
+    console.log(chipValues);
+  };
+
+  const printValues = () => {
+    console.log(chipValues);
   };
 
   return (
@@ -71,7 +90,6 @@ export default function NoteTwo({ index, title, content, chips }) {
                 className={classes.textField}
                 onChange={handleChange}
                 defaultValue={title}
-                // InputProps={{ disableUnderline: true }}
                 disabled={edit}
               />
             )}
@@ -85,16 +103,23 @@ export default function NoteTwo({ index, title, content, chips }) {
                 className={classes.textField}
                 onChange={handleChange}
                 defaultValue={content}
-                // InputProps={{ disableUnderline: true }}
                 disabled={edit}
               />
             )}
 
-            {/* Write after this */}
             <div className={classes.chipContainer}>
-              {chips?.map((item, index) => (
-                <Chip key={index} className={classes.chip} label={item} />
-              ))}
+              {chipValues?.map((item, index) =>
+                edit ? (
+                  <Chip key={index} className={classes.chip} label={item} />
+                ) : (
+                  <Chip
+                    key={index}
+                    className={classes.chip}
+                    label={item}
+                    onDelete={() => deleteChip(item, index)}
+                  />
+                )
+              )}
             </div>
           </form>
         </CardContent>
