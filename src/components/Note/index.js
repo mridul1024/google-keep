@@ -117,7 +117,7 @@ export default function Note() {
                   name="content"
                   className={classes.textField}
                   onChange={handleChange}
-                  placeholder="Write your note here."
+                  placeholder="Write your note here"
                   InputProps={{ disableUnderline: true }}
                   value={values.content}
                 />
@@ -135,7 +135,7 @@ export default function Note() {
                 </div>
               ) : (
                 <Typography className={classes.tagPlaceholder}>
-                  Your tags will show up here.
+                  Your tags will show up here
                 </Typography>
               )}
             </form>
@@ -159,7 +159,6 @@ export default function Note() {
                 id="chipsInput"
                 type="text"
                 placeholder="Enter tag"
-                className={classes.textField}
                 InputProps={{ disableUnderline: true }}
                 onChange={storeTag}
               />

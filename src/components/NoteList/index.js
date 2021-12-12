@@ -26,7 +26,7 @@ export default function NoteList() {
       <div className={classes.searchContainer}>
         <TextField
           id="filled-search"
-          label="Search using tags."
+          label="Search using tags"
           type="search"
           variant="outlined"
           className={classes.search}
