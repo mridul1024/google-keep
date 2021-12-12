@@ -24,12 +24,10 @@ import { v4 as uuidv4 } from "uuid";
 export default function Note() {
   const dispatch = useDispatch();
   const classes = useStyles();
-  let contentFieldVisibility = false;
   const [values, setValues] = useState({ title: "", content: "" });
   const [isOpen, setIsOpen] = useState(false);
   const [tagValue, setTagValue] = useState({ tag: "" });
   const [tags, setTags] = useState([]);
-
   const [note, addNote] = useState({
     noteData: {
       noteTitle: "",
@@ -56,37 +54,14 @@ export default function Note() {
     });
   };
 
-  const addChips = () => {
-    let chip = document.getElementById("chipsInput");
-    if (chip != null || chip != "undefined") {
-      addNote({
-        ...note,
-        chips: chips.push(chip.value),
-      });
-      note.chips.map((item) => {
-        console.log(item);
-      });
-    }
-  };
-
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
   };
 
   const open = Boolean(note.anchor);
   const id = open ? "simple-popover" : undefined;
 
   const addNewNote = () => {
-    // addNote({
-    //   ...note,
-    //   noteData: {
-    //     noteTitle: values.title,
-    //     noteContent: values.content,
-    //   },
-    // });
-
-    console.log(note.noteData);
     dispatch(
       addNotes({
         note: {
@@ -101,20 +76,14 @@ export default function Note() {
 
   const storeTag = (e) => {
     setTagValue({ tag: e.currentTarget.value });
-    console.log(`tag = ${tagValue.tag}`);
   };
 
   const addTag = () => {
-    console.log(`add tag = ${tagValue.tag}`);
-    //add tag here
     setTags([...tags, tagValue.tag.toString()]);
-    console.log(tags);
   };
 
   const deleteTag = (item, index) => {
-    console.log(`delete = ${index} ${item}`);
     setTags([...tags.filter((item, id) => index !== id)]);
-    console.log(tags);
   };
 
   return (

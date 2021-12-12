@@ -7,7 +7,6 @@ import {
   CardActions,
   TextField,
   Button,
-  ListItem,
   Typography,
   Chip,
 } from "@material-ui/core";
@@ -27,21 +26,13 @@ export default function NoteTwo({ index, title, content, chips }) {
     setChipValues(chips);
   }, [chips]);
 
-  //add handlechange
   const handleChange = (e) => {
     setChangeTrigger(true);
-    console.log(e.target.value);
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
   };
 
   const editNotes = () => {
-    if (edit === true) {
-      console.log("disabled tha ab enabled");
-    }
-
     if (!edit && (changeTrigger || chipChangeTrigger)) {
-      console.log(`while editing - ${chipValues}`);
       dispatch(
         editNoteState({
           id: index,
@@ -62,13 +53,7 @@ export default function NoteTwo({ index, title, content, chips }) {
 
   const deleteChip = (item, index) => {
     setChipChangeTrigger(true);
-    console.log(`delete chip with item - ${item} and index - ${index}`);
     setChipValues([...chipValues.filter((chip) => chip !== item)]);
-    console.log(chipValues);
-  };
-
-  const printValues = () => {
-    console.log(chipValues);
   };
 
   return (

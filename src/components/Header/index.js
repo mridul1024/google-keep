@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { useStyles } from "./styles";
+import { FormOutlined } from "@ant-design/icons";
 
 export default function Header() {
   const classes = useStyles();
@@ -11,7 +11,7 @@ export default function Header() {
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" className={classes.header}>
-            Sasta wala google keep
+            <FormOutlined /> GOOGLE KEEP
           </Typography>
         </Toolbar>
       </AppBar>
