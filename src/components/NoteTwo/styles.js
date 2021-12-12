@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, withTheme } from "@material-ui/core";
 
 export const useStyles = makeStyles({
   container: {
@@ -6,7 +6,10 @@ export const useStyles = makeStyles({
     height: "200px",
     padding: "5px 5px",
     margin: "10px 10px",
-    background: "#fff59d",
+    // background: "#fff59d",
+    background: "#fced65c7",
+    border: "3px solid #fae73a",
+    borderRadius: "12px",
     position: "relative",
   },
   content: {
